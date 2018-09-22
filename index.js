@@ -1,8 +1,6 @@
 
 var mysql = require('mysql')
 
-
-
 // Dependencies
 var http = require("http");
 var fs = require("fs");
@@ -52,9 +50,7 @@ connection.connect(function (err) {
 
 connection.end()
 
-document.getElementById('submit').click(function(){
-    console.log('hi')
-})
+
 
 
 
