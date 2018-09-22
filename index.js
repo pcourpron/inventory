@@ -25,7 +25,7 @@ function handleRequest(req, res) {
 }
 
 // Starts our server
-server.listen(PORT, function() {
+server.listen(process.env.PORT || 5000, function() {
   console.log("Server is listening on PORT: " + PORT);
 });
 
