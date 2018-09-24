@@ -19,11 +19,8 @@ $("#submit").on("click", function (event) {
         function (data) {
             
             if (data){
-                location = 'inventory.html'
-                
+                location = 'inventory.html'  
             }
-
         }
-
     )
 });

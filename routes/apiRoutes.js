@@ -1,7 +1,5 @@
 
 var mysql = require('mysql')
-var port = process.env.PORT || 5000;
-
 
 module.exports = function (app) {
 
@@ -134,7 +132,7 @@ module.exports = function (app) {
 
 
             response.send(res)
-
+            connection.end()
 
            
         })
