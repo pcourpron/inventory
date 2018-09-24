@@ -1,58 +1,39 @@
-
-var mysql = require('mysql')
-
 // Dependencies
-var http = require("http");
-var fs = require("fs");
+// =============================================================
+var express = require("express");
+var bodyParser = require("body-parser");
+var path = require("path");
 
-// Set our port to 8080
-var PORT = 8080;
+// Sets up the Express App
+// =============================================================
+var app = express();
+var PORT = process.env.port || 3000;
 
-// Create our server
-var server = http.createServer(handleRequest);
+// Sets up the Express app to handle data parsing
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.static('public'));
+app.use(express.static('routes'));
 
-// Create a function for handling the requests and responses coming into our server
-function handleRequest(req, res) {
+require("./routes/apiRoutes")(app);
 
-  // Here we use the fs package to read our index.html file
-  fs.readFile(__dirname + "/index.html", function(err, data) {
 
-    // We then respond to the client with the HTML page by specifically telling the browser that we are delivering
-    // an html file.
-    res.writeHead(200, { "Content-Type": "text/html" });
-    res.end(data);
-  });
-}
+// Routes
+// =============================================================
 
-// Starts our server
-server.listen(process.env.PORT || 5000, function() {
-  console.log("Server is listening on PORT: " + PORT);
+// Basic route that sends the user first to the AJAX Page
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
-var connection = mysql.createConnection({
-    host: "us-cdbr-iron-east-01.cleardb.net",
 
-    // Your port; if not 3306
-    port: 3306,
 
-    // Your username
-    user: "b7d125968a524d",
 
-    // Your password
-    password: "481fcd0a",
-    database: "heroku_93e319213752dd2"
+
+
+
+// Starts the server to begin listening
+// =============================================================
+app.listen(PORT, function() {
+  console.log("App listening on PORT " + PORT);
 });
-
-connection.connect(function (err) {
-    if (err) throw err;
-    console.log("connected as id " + connection.threadId);
-});
-
-connection.end()
-
-
-
-
-
-
-
