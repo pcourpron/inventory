@@ -55,7 +55,7 @@ module.exports = function (app) {
             host: "us-cdbr-iron-east-01.cleardb.net",
 
             // Your port; if not 3306
-            port: port,
+            port: 3306,
 
             // Your username
             user: "b7d125968a524d",
@@ -90,7 +90,7 @@ module.exports = function (app) {
             host: "us-cdbr-iron-east-01.cleardb.net",
 
             // Your port; if not 3306
-            port: port,
+            port:3306,
 
             // Your username
             user: "b7d125968a524d",

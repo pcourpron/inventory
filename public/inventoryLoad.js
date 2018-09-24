@@ -1,4 +1,4 @@
-
+console.log('hi')
 
 function runTableQuery() {
     var currentURL = window.location.origin;
