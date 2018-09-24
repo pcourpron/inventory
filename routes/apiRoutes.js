@@ -10,7 +10,7 @@ module.exports = function (app) {
     app.post("/api/tables", function (req, response) {
         var inputs = req.body
         var mysql = require('mysql')
-        var port = process.env.PORT || 3306;
+        var port = 3306;
 
         var connection = mysql.createConnection({
             host: "us-cdbr-iron-east-01.cleardb.net",
@@ -29,8 +29,6 @@ module.exports = function (app) {
 
         connection.connect(function (err) {
             if (err) throw err;
-            
-
         });
 
         connection.query('SELECT * FROM users', function (err, res) {
