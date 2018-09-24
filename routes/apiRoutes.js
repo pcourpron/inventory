@@ -1,6 +1,6 @@
 
 var mysql = require('mysql')
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 5000;
 
 
 module.exports = function (app) {
@@ -85,7 +85,7 @@ module.exports = function (app) {
       app.post("/api/order", function (req, response) {
         var inputs = req.body
         var mysql = require('mysql')
-        var port = process.env.PORT || 3306;
+        var port = process.env.PORT || 5000;
 
         var connection = mysql.createConnection({
             host: "us-cdbr-iron-east-01.cleardb.net",
