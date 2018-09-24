@@ -35,12 +35,12 @@ module.exports = function (app) {
 
         connection.query('SELECT * FROM users', function (err, res) {
             if (res[0].username === inputs.customerEmail && res[0].password === inputs.customerPassword){
-                console.log('hi')
                 response.send(true)
             } 
+
         })
 
-        connection.end()
+        
 
         
 
