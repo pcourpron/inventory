@@ -7,7 +7,6 @@ var path = require("path");
 // Sets up the Express App
 // =============================================================
 var app = express();
-app.
 var PORT = process.env.PORT || 5000;
 var forceSsl = function (req, res, next) {
   if (req.headers['x-forwarded-proto'] !== 'https') {
@@ -17,11 +16,10 @@ var forceSsl = function (req, res, next) {
 };
 
 
- app.use(forceSsl);
   
 
-  // other configurations etc for express go here...
-
+app.use(forceSsl);
+  
 
 
 // Sets up the Express app to handle data parsing
