@@ -8,6 +8,22 @@ var path = require("path");
 // =============================================================
 var app = express();
 var PORT = process.env.PORT || 5000;
+var forceSsl = function (req, res, next) {
+  if (req.headers['x-forwarded-proto'] !== 'https') {
+    return res.redirect(['https://', req.get('Host'), req.url].join(''));
+  }
+  return next();
+};
+
+app.configure(function () {
+
+  if (env === 'production') {
+    app.use(forceSsl);
+  }
+
+  // other configurations etc for express go here...
+})
+
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,7 +38,7 @@ require("./routes/apiRoutes")(app);
 // =============================================================
 
 // Basic route that sends the user first to the AJAX Page
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
@@ -34,6 +50,6 @@ app.get("/", function(req, res) {
 
 // Starts the server to begin listening
 // =============================================================
-app.listen(PORT, function() {
+app.listen(PORT, function () {
   console.log("App listening on PORT " + PORT);
 });
