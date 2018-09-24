@@ -1,6 +1,6 @@
 
 var mysql = require('mysql')
-var port = process.env.PORT || 3306;
+var port = process.env.PORT || 8080;
 
 
 module.exports = function (app) {
