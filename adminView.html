@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Logo</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="sass.html">Sass</a></li>
+                <li><a href="badges.html">Components</a></li>
+                <li><a href="collapsible.html">JavaScript</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class='container'>
+        <div class='row'>
+            <div class='col s3 center-align'>
+                <button id='all' class="btn waves-effect waves-light">
+                    List Available Products
+                </button>
+            </div>
+            <div class='col s3 center-align'>
+                <button id='low' class="btn waves-effect waves-light">
+                    Low Inventory
+                </button>
+            </div>
+            <div class='col s3 center-align'>
+                <button id='add' class="btn waves-effect waves-light">
+                    Add Inventory
+                </button>
+            </div>
+            <div class='col s3 center-align'>
+                <button id='new' class="btn waves-effect waves-light">
+                    Add Product
+                </button>
+            </div>
+        </div>
+
+
+    </div>
+    <div class='container items'></div>
+
+
+    <script>
+if (localStorage.getItem('access') !== 'admin'){
+    $('.container').text(`Hey you don't have access to this page! Get outta here.`)
+}
+else{
+
+        $('#all').click(function () {
+            $('.add').remove()
+            $('.things').remove()
+            var currentURL = window.location.origin;
+
+            $.ajax({ url: currentURL + "/api/tables", method: "GET" })
+                .then(function (tableData) {
+                    var rowNumber = 1
+                    var colNumber = 1
+
+                    for (var i = 0; i < tableData.length; i++) {
+
+                        if (i % 3 === 0) {
+                            var tableSection = $("<div>");
+                            tableSection.addClass("row things");
+                            tableSection.attr("id", "row-" + rowNumber);
+                            $(".items").append(tableSection);
+                            rowNumber++
+                        }
+
+                        $('#row-' + (Math.floor(i / 3) + 1)).append(
+                            `<div class='col s4'>
+                                <div class="card blue-grey darken-1">
+                                    <div class="card-content white-text" >
+                                        <span class="card-title" data-productID = ${tableData[i].item_id} >${tableData[i].product_name}</span>
+                                        <p> Price : $${tableData[i].price}</p>
+                                        <p id = "${tableData[i].item_id}"> In stock : ${tableData[i].stock_quantity}</p>
+                                    </div>
+                        </div>
+                    </div>`)
+                    }
+                });
+        })
+
+
+        $('#low').click(
+            function () {
+                var currentURL = window.location.origin;
+            $('.add').remove()
+            $('.things').remove()
+
+                $.ajax({ url: currentURL + "/api/tables", method: "GET" })
+                    .then(function (tableData) {
+                        var rowNumber = 1
+                        var colNumber = 1
+                        var counter = 0
+                        for (var i = 0; i < tableData.length; i++) {
+                           
+                            if (tableData[i].stock_quantity < 5) {
+                                console.log(tableData[i].stock_quantity)
+                                if (counter % 3 === 0) {
+                                    var tableSection = $("<div>");
+                                    tableSection.addClass("row things");
+                                    tableSection.attr("id", "row-" + rowNumber);
+                                    $(".items").append(tableSection);
+                                    rowNumber++
+                                }
+                               
+
+                                $('#row-' + (Math.floor(counter / 3) + 1)).append(
+                                    `<div class='col s4'>
+                                <div class="card blue-grey darken-1">
+                                    <div class="card-content white-text" >
+                                        <span class="card-title" data-productID = ${tableData[i].item_id} >${tableData[i].product_name}</span>
+                                        <p> Price : $${tableData[i].price}</p>
+                                        <p id = "${tableData[i].item_id}"> In stock : ${tableData[i].stock_quantity}</p>
+                                    </div>
+                        </div>
+                    </div>`)
+                    counter++
+                            }
+                        }
+                    });
+
+
+            }
+        )
+
+        $('#add').click(function () {
+            $('.add').remove()
+            $('.things').remove()
+            $('.items').append(
+                `<div class ='row add'>
+                        <div class="input-field col s6">
+                              <input id="item" type="text" class="validate">
+                              <label for="item">Item</label>
+                </div>
+
+                        <div class="input-field col s6">
+                              <input id="amount" type="text" class="validate">
+                              <label for="amount">New Amount</label>
+                            </div>
+                            </div>
+                          
+                            <div class='row center-align add'>
+                    
+                    <button id='submitAdd' class="btn waves-effect waves-light" type="submit" name="action">Submit
+                            <i class="material-icons right">send</i>
+                          </button>
+                                
+              </div>`
+            )
+            var currentURL = window.location.origin;
+    
+
+            $.ajax({ url: currentURL + "/api/tables", method: "GET" })
+                .then(function (tableData) {
+                    var rowNumber = 1
+                    var colNumber = 1
+
+                    for (var i = 0; i < tableData.length; i++) {
+
+                        if (i % 3 === 0) {
+                            var tableSection = $("<div>");
+                            tableSection.addClass("row");
+                            tableSection.attr("id", "row-" + rowNumber);
+                            $(".items").append(tableSection);
+                            rowNumber++
+                        }
+
+                        $('#row-' + (Math.floor(i / 3) + 1)).append(
+                            `<div class='col s4'>
+                                <div class="card blue-grey darken-1">
+                                    <div class="card-content white-text" >
+                                        <span class="card-title" data-productID = ${tableData[i].item_id} >${tableData[i].product_name}</span>
+                                        <p> Price : $${tableData[i].price}</p>
+                                        <p id = "${tableData[i].item_id}"> In stock : ${tableData[i].stock_quantity}</p>
+                                    </div>
+                        </div>
+                    </div>`)
+
+                    }
+                });
+        })
+
+        $(document).on('click', '#submitAdd', function () {
+
+            event.preventDefault();
+
+            // Here we grab the form elements
+            var product = $("#item").val().trim()
+            var quantityChange = {
+                item: $(`span:contains(${product})`).data('productid'),
+                quantity: $("#amount").val().trim()
+
+            };
+
+            $.post("/api/newQuant", quantityChange,
+                function (data) {
+                    $(`#${quantityChange.item}`).text(`In stock : ${quantityChange.quantity}`)
+
+
+                }
+            )
+        })
+
+
+        $('#new').click(function () {
+            $('.add').remove()
+            $('.things').remove()
+            $('.items').append(
+                `<div class ='row add'>
+                        <div class="input-field col s6">
+                              <input id="item" type="text" class="validate">
+                              <label for="item">New Item</label>
+                </div>
+
+                        <div class="input-field col s6">
+                              <input id="amount" type="text" class="validate">
+                              <label for="amount">Amount</label>
+                            </div>
+                            </div>
+                    <div class ='row add'>
+                        <div class="input-field col s6">
+                              <input id="department" type="text" class="validate">
+                              <label for="department">Department</label>
+                </div>
+
+                        <div class="input-field col s6">
+                              <input id="price" type="text" class="validate">
+                              <label for="price">Price</label>
+                            </div>
+                            </div>                   
+                           
+                            <div class='row center-align add'>
+                    
+                    <button id='submitNew' class="btn waves-effect waves-light" type="submit" name="action">Submit
+                            <i class="material-icons right">send</i>
+                          </button>
+                                
+              </div>`
+            )
+            var currentURL = window.location.origin;
+          
+
+        })
+
+         $(document).on('click', '#submitNew', function () {
+
+event.preventDefault();
+
+// Here we grab the form elements
+ 
+var newItem = {
+    item: $("#item").val().trim(),
+    quantity: $("#amount").val().trim(),
+    department: $('#department').val().trim(),
+    price: $('#price').val().trim()
+
+};
+ 
+$.post("/api/newInv", newItem,
+    function (data) {
+        console.log(data)
+      
+
+    }
+)
+})
+}
+
+
+    </script>
+</body>
+
+</html>

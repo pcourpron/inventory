@@ -8,17 +8,7 @@ var path = require("path");
 // =============================================================
 var app = express();
 var PORT = process.env.PORT || 5000;
-var forceSsl = function (req, res, next) {
-  if (req.headers['x-forwarded-proto'] !== 'https') {
-    return res.redirect(['https://', req.get('Host'), req.url].join(''));
-  }
-  return next();
-};
 
-
-  
-
-app.use(forceSsl);
   
 
 
@@ -37,6 +27,18 @@ require("./routes/apiRoutes")(app);
 // Basic route that sends the user first to the AJAX Page
 app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
+});
+
+app.get("/inventory", function (req, res) {
+  res.sendFile(path.join(__dirname, "inventory.html"));
+});
+
+app.get("/admin", function (req, res) {
+  res.sendFile(path.join(__dirname, "admin.html"));
+});
+
+app.get("/adminView", function (req, res) {
+  res.sendFile(path.join(__dirname, "adminView.html"));
 });
 
 

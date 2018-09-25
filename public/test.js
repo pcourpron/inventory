@@ -3,7 +3,7 @@ $("#submit").on("click", function (event) {
     event.preventDefault();
 
     // Here we grab the form elements
-    var newReservation = {
+    var newLogin = {
         customerEmail: $("#email").val().trim(),
         customerPassword: $("#password").val().trim(),
 
@@ -15,11 +15,16 @@ $("#submit").on("click", function (event) {
     // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
     // depending on if a tables is available or not.
 
-    $.post("/api/tables", newReservation,
+    $.post("/api/tables", newLogin,
         function (data) {
+            console.log(data)
             
-            if (data){
-                location = 'inventory.html'  
+            if (data === 'user'){
+                location = 'inventory'  
+            }
+            else if (data = 'admin'){
+                location = 'admin'
+                localStorage.setItem('access','admin')
             }
         }
     )

@@ -5,12 +5,6 @@ function runTableQuery() {
 
     $.ajax({ url: currentURL + "/api/tables", method: "GET" })
         .then(function (tableData) {
-
-            console.log("------------------------------------");
-            console.log("URL: " + currentURL + "/api/tables");
-            console.log("------------------------------------");
-
-
             var rowNumber = 1
             var colNumber = 1
         
