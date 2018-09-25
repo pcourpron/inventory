@@ -47,18 +47,18 @@ $("#submit").on("click", function (event) {
 
     var product = $("#product").val().trim()
 
-    console.log($(`span:contains(${product})`).data('productid'))
 
     // Here we grab the form elements
     var newOrder = {
         productID: $(`span:contains(${product})`).data('productid'),
         amount: $("#amount").val().trim(),
     };
-
+    if ($(`span:contains(${product})`).data('productid') !== undefined){
 
 
     $.post("/api/order", newOrder,
         function (data) {
+            
         if( newOrder.amount > data[0].stock_quantity){
             alert(`Please select a value less than or equal to ${data[0].stock_quantity} to complete your order!`)
         }
@@ -71,11 +71,14 @@ $("#submit").on("click", function (event) {
            alert(`You bought ${newOrder.amount} ${product}`)
         }
 
-
-
         }
 
     )
+    }
+    else{
+        alert('Please select an item in stock!')
+    }
+    
 
 
  
