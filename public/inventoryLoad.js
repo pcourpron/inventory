@@ -60,13 +60,13 @@ $("#submit").on("click", function (event) {
         if( newOrder.amount > data[0].stock_quantity){
             alert(`Please select a value less than or equal to ${data.stock_quantity} to complete your order!`)
         }
-        else if (newOrder < 0){
+        else if (newOrder.amount <= 0){
             alert('Please select an Amount greater than 0!')
         }
         else{
 
             $(`#${data[0].item_id}`).text(`In stock : ${parseInt(data[0].stock_quantity)-parseInt(newOrder.amount)}`)
-           
+           alert(`You bought ${amount} ${product}`)
         }
 
 
