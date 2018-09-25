@@ -1,4 +1,4 @@
-console.log('hi')
+
 
 function runTableQuery() {
     var currentURL = window.location.origin;
@@ -46,6 +46,8 @@ $("#submit").on("click", function (event) {
     event.preventDefault();
 
     var product = $("#product").val().trim()
+
+    console.log($(`span:contains(${product})`).data('productid'))
 
     // Here we grab the form elements
     var newOrder = {

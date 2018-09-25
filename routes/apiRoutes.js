@@ -106,6 +106,7 @@ module.exports = function (app) {
         });
         connection.query(`SELECT * FROM products
         WHERE ?`,{item_id : parseInt(inputs.productID)}, function (err, res) {
+            if (err) 
             if (inputs.amount > res[0].stock_quantity){
 
             }
@@ -120,11 +121,7 @@ module.exports = function (app) {
                     stock_quantity: parseInt(res[0].stock_quantity) - parseInt(inputs.amount)
                 },{
                     item_id : parseInt(inputs.productID)
-                }],function(){
-           
-                
-
-                }
+                }]
                 )
                 
             }
