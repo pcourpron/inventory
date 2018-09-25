@@ -11,17 +11,17 @@ module.exports = function (app) {
         var port = 3306;
 
         var connection = mysql.createConnection({
-            host: "us-cdbr-iron-east-01.cleardb.net",
+            host: "gtizpe105piw2gfq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
 
             // Your port; if not 3306
             port: port,
 
             // Your username
-            user: "b7d125968a524d",
+            user: "hbj13fdjgl5gdjky",
 
             // Your password
-            password: "481fcd0a",
-            database: "heroku_93e319213752dd2"
+            password: "nfer3mqxygj3hxry",
+            database: "hrhqkjdyq4hklig9"
 
         });
 
@@ -50,17 +50,17 @@ module.exports = function (app) {
 
     app.get("/api/tables", function(req, response) {
          var connection = mysql.createConnection({
-            host: "us-cdbr-iron-east-01.cleardb.net",
+            host: "gtizpe105piw2gfq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
 
             // Your port; if not 3306
             port: 3306,
 
             // Your username
-            user: "b7d125968a524d",
+            user: "hbj13fdjgl5gdjky",
 
             // Your password
-            password: "481fcd0a",
-            database: "heroku_93e319213752dd2"
+            password: "nfer3mqxygj3hxry",
+            database: "hrhqkjdyq4hklig9"
 
         });
 
@@ -85,17 +85,17 @@ module.exports = function (app) {
         var port = process.env.PORT || 5000;
 
         var connection = mysql.createConnection({
-            host: "us-cdbr-iron-east-01.cleardb.net",
+            host: "gtizpe105piw2gfq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
 
             // Your port; if not 3306
             port:3306,
 
             // Your username
-            user: "b7d125968a524d",
+            user: "hbj13fdjgl5gdjky",
 
             // Your password
-            password: "481fcd0a",
-            database: "heroku_93e319213752dd2"
+            password: "nfer3mqxygj3hxry",
+            database: "hrhqkjdyq4hklig9"
 
         });
 
